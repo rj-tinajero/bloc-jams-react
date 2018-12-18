@@ -10,7 +10,8 @@ class Album extends Component {
         this.state = {
             album: album,
             currentSong: album.songs[0],
-            isPlaying: false
+            isPlaying: false,
+            overSong: null
         };
 
         this.audioElement = document.createElement('audio');
@@ -42,11 +43,25 @@ class Album extends Component {
         }
     }
 
+    handleOver(index) {
+        console.log(index);
+        this.setState({
+        overSong: index
+        })
+    }
+
+    handleGone() {
+        this.setState({
+        overSong: null
+        })
+
+    }
+
     render() {
         return (
             <section className="album">
                 <section id="ablum-info">
-                    <img id="album0cover-art" src={this.state.album.albumCover} alt={this.state.album.title}/>
+                    <img id="album-cover-art" src={this.state.album.albumCover} alt={this.state.album.title}/>
                     <div className="album-details">
                         <h1 id="album-title">{this.state.album.title}</h1>
                         <h2 className="artist">{this.state.album.artist}</h2>
@@ -59,12 +74,19 @@ class Album extends Component {
                         <col id="song-title-column" />
                         <col id="song-duration-column" />
                     </colgroup>
-                    <tbody>
-                        {this.state.album.songs.map((song, index) =>
-                        <tr className="song" key={index} onClick={() => this.handleSongClick(song)}>
-                            {index + 1} {this.state.album.songs[index].title} {this.state.album.songs[index].duration} seconds 
+                    {this.state.album.songs.map((song, index) =>
+                        <tr className="song" key={index} onClick={() => this.handleSongClick(song)} onMouseEnter={() => this.handleOver(index)} onMouseLeave={() => this.handleGone()}>      
+                            {this.state.overSong === index ? (() => {
+                                if (this.state.isPlaying === true) {
+                                    return <i class="icon ion-md-pause"></i>;
+                                } else {
+                                    return <i class="icon ion-md-play"></i>;}
+                                })()
+                                : <span>{index +1} </span> 
+                            } {this.state.album.songs[index].title} {this.state.album.songs[index].duration} seconds 
+                                   
                         </tr> )}
-                    </tbody>
+                        
                 </table>
             </section>
         );   
