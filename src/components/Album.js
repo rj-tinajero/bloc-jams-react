@@ -114,6 +114,13 @@ class Album extends Component {
         this.setState({volume: e.target.value});
     }
 
+    formatTime({this.state.currentTime}) {
+        let min = Math.floor(this.state.currentTime / 60); 
+        let sec = this.state.currentTime % 60;
+        return min + ":" + sec; 
+
+    }
+
     render() {
         return (
             <section className="album">
