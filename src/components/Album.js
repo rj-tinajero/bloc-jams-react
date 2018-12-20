@@ -13,7 +13,7 @@ class Album extends Component {
             currentSong: album.songs[0],
             currentTime: 0,
             duration: album.songs[0].duration,
-            volume: 50,
+            volume: 0.5,
             isPlaying: false,
             overSong: null
         };
