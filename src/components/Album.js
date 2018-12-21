@@ -114,11 +114,15 @@ class Album extends Component {
         this.setState({volume: e.target.value});
     }
 
-    formatTime({this.state.currentTime}) {
-        let min = Math.floor(this.state.currentTime / 60); 
-        let sec = this.state.currentTime % 60;
-        return min + ":" + sec; 
-
+    formatTime(time) {
+        if (!isNaN(time)) {
+            let min = Math.round(Math.floor(time / 60)); 
+            let sec = Math.round(time % 60);
+            let mss = ('0' + min).slice(-2) + ':' +('0'+ sec).slice(-2);
+            return mss;
+        } else {
+            return "-:--";
+        }
     }
 
     render() {
@@ -147,7 +151,7 @@ class Album extends Component {
                                     return <i class="icon ion-md-play"></i>;}
                                 })()
                                 : <span>{index +1} </span> 
-                            } {this.state.album.songs[index].title} {this.state.album.songs[index].duration} seconds 
+                            } {this.state.album.songs[index].title} {this.formatTime(this.state.album.songs[index].duration)} 
                                    
                         </tr> )}
                         
@@ -162,6 +166,7 @@ class Album extends Component {
                 handleNextClick={() => this.handleNextClick()}
                 handleTimeChange={(e) => this.handleTimeChange(e)}
                 handleSetVolume={(e) => this.handleSetVolume(e)}
+                formatTime={(time) => this.formatTime(time)}
               />
             </section>
         );   
