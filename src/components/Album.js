@@ -53,8 +53,8 @@ class Album extends Component {
 
     componentWillUnmount() {
         this.audioElement.src = null;
-        this.audioElement.removeEventListener('timeupdate', this.eventListners.timeupdate);
-        this.audioElement.removeEventListener('durationchange', this.eventListners.durationchange);
+        this.audioElement.removeEventListener('timeupdate', this.eventListeners.timeupdate);
+        this.audioElement.removeEventListener('durationchange', this.eventListeners.durationchange);
         this.audioElement.removeEventListener('volumechange', this.eventListeners.volumechange);
     }
 
@@ -136,23 +136,28 @@ class Album extends Component {
                         <div id="release-info">{this.state.album.releaseInfo}</div>
                     </div>
                 </section>
-                <table id="song-list">
-                    <colgroup>
-                        <col id="song-number-column" />
-                        <col id="song-title-column" />
-                        <col id="song-duration-column" />
-                    </colgroup>
+                <table id="song-list" className="col" className="table table-hover">
+                    <thead>
+                        <tr>
+                            <td>#</td>
+                            <td>Title</td>
+                            <td><i class="icon ion-md-time"></i></td>
+                        </tr>
+                    </thead>
                     {this.state.album.songs.map((song, index) =>
                         <tr className="song" key={index} onClick={() => this.handleSongClick(song)} onMouseEnter={() => this.handleOver(index)} onMouseLeave={() => this.handleGone()}>      
+                           <td>
                             {this.state.overSong === index ? (() => {
                                 if (this.state.isPlaying === true && this.state.currentSong === song) {
                                     return <i class="icon ion-md-pause"></i>;
                                 } else {
                                     return <i class="icon ion-md-play"></i>;}
                                 })()
-                                : <span>{index +1} </span> 
-                            } {this.state.album.songs[index].title} {this.formatTime(this.state.album.songs[index].duration)} 
-                                   
+                                : <span>{index +1} </span>   
+                            } 
+                            </td>
+                            <td>{this.state.album.songs[index].title}</td> 
+                            <td>{this.formatTime(this.state.album.songs[index].duration)}</td>          
                         </tr> )}
                         
                 </table>
