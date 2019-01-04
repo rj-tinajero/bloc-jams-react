@@ -1,8 +1,9 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'; 
+import Background from '../components/blurred_backgrounds/blur_bg_3.jpg';
 
 const Landing = () => (
-    <section className="landing" className="bg-dark text-white">
+    <section className="landing" className="bg-dark text-white" style={{backgroundImage: `url(${Background})`}}>
         <h1 className="jumbotron text-center">Turn the music up!</h1>
 
         <section className="selling-points" className="row">
